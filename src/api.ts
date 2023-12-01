@@ -10,39 +10,23 @@ const BASE_URL = 'https://frontend-take-home-service.fetch.com';
  */
 class AdopterAPI {
 	/** Generic method for making API requests and catching/throwing errors */
-	// static async request(endpoint: string, data = {}, method = "GET") {
-	//   const url = new URL(`${BASE_URL}/${endpoint}`);
-	//   const headers = {
-	//     "content-type": "application/json",
-	//   };
-
-	//   url.search = method === "GET" ? new URLSearchParams(data).toString() : "";
-
-	//   const body = method !== "GET" ? JSON.stringify(data) : undefined;
-
-	//   const resp = await fetch(url, { method, body, headers });
-
-	//   if (!resp.ok) {
-	//     console.error("API Error:", resp.statusText, resp.status);
-	//     const { error } = await resp.json();
-	//     throw Array.isArray(error) ? error : [error];
-	//   }
-
-	//   return await resp.json();
-	// }
-
-	/** Generic method for making API requests and catching/throwing errors */
 	static async request(endpoint: string, data = {}, method = 'GET') {
 		const url = new URL(`${BASE_URL}/${endpoint}`);
 		const headers = {
 			'content-type': 'application/json',
 		};
 
-		url.search = method === 'GET' ? new URLSearchParams(data).toString() : '';
+		url.search =
+			method === 'GET' ? new URLSearchParams(data).toString() : '';
 
 		const body = method !== 'GET' ? JSON.stringify(data) : undefined;
 
-		const resp = await fetch(url, { method, body, headers, credentials: 'include' });
+		const resp = await fetch(url, {
+			method,
+			body,
+			headers,
+			credentials: 'include',
+		});
 
 		if (!resp.ok) {
 			console.error('API Error:', resp.statusText, resp.status);
@@ -56,14 +40,6 @@ class AdopterAPI {
 
 	/** Login to Adopter */
 	static async login(body: Login) {
-		// const response = await fetch(`${BASE_URL}/auth/login`, {
-		//   method: "POST",
-		//   body: JSON.stringify(body),
-		//   credentials: "include",
-		//   headers: {
-		//     "content-type": "application/json"
-		//   }
-		// })
 		await this.request('auth/login', body, 'POST');
 	}
 
@@ -88,8 +64,11 @@ class AdopterAPI {
 	}
 
 	/** Get all dogs that meet search params */
-	static async searchDogs(body: Search) {
-		const response = await this.request('dogs/search', body);
+	static async searchDogs(body: Search, next: string | null = null) {
+		const response =
+			next !== null
+				? await this.request(next)
+				: await this.request('dogs/search', body);
 
 		return response.json();
 	}

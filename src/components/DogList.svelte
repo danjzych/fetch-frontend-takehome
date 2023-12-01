@@ -4,7 +4,7 @@
 	export let availableDogs: Dog[];
 </script>
 
-<div>
+<div class="m-4 rounded-xl border-2 p-4">
 	We are the dogs!
 	{#each availableDogs as dog, i}
 		<DogCard {dog} />

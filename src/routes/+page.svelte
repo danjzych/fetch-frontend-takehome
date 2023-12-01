@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { isLoggedIn, username } from '../stores';
+	import { isLoggedIn } from '../stores';
 	import AdopterAPI from '../api';
 
 	let formData = {
@@ -15,7 +15,6 @@
 		try {
 			await AdopterAPI.login(formData);
 			isLoggedIn.set(true);
-			username.set(formData.name);
 			goto('/search', { replaceState: true });
 		} catch (err) {
 			error = true;
