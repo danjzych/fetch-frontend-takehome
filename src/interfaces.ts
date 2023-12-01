@@ -32,9 +32,17 @@ interface Login {
   email: string;
 }
 
+interface Search {
+  ascending: boolean,
+  selectedBreeds: string[],
+  ageMin: number,
+  ageMax: number
+}
+
 export type {
   Dog,
   Location,
   Coordinates,
-  Login
+  Login,
+  Search
 }
