@@ -1,30 +1,31 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-	import AdopterAPI from "../api";
+    import { goto } from "$app/navigation";
+    import AdopterAPI from "../api";
 
-    let name: string = "";
-
-    function login() {
-        AdopterAPI.login({
-            name: "testuser",
-            email: "test@gmail.com"
-        })
+    let formData = {
+        name: "",
+        email: ""
     }
 
-    function logout() {
-        AdopterAPI.logout();
-    }
+    let error = false;
 
-
-    async function handleBreedClick(evt: MouseEvent) {
-        const response = await AdopterAPI.getBreeds();
-
-        console.log(response)
+    /** Login */
+    async function login() {
+        try {
+            await AdopterAPI.login(formData);
+            goto("/search", {replaceState: true});
+        } catch (err) {
+            error = true;
+        }
     }
 </script>
 
-<h1>Hello {name}</h1>
-<input bind:value={name}/>
-<button on:click={login}>Login</button>
-<button on:click={logout}>Logout</button>
-<button on:click={handleBreedClick}> TEST </button>
+<form on:submit|preventDefault={login}>
+    <h2>Login to Adopter</h2>
+    <input placeholder="name" bind:value={formData.name} />
+    <input placeholder="email" bind:value={formData.email} />
+    {#if error}
+        <p>Invalid Credentials, try again.</p>
+    {/if}
+    <button>Login</button>
+</form>

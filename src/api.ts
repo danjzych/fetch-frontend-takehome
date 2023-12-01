@@ -1,5 +1,7 @@
 "use strict";
 
+import type { Login } from "./interfaces";
+
 const BASE_URL = "https://frontend-take-home-service.fetch.com";
 
 /**
@@ -7,8 +9,6 @@ const BASE_URL = "https://frontend-take-home-service.fetch.com";
  * API, referred to as "AdopterAPI" throughout.
  */
 class AdopterAPI {
-
-  static token = "";
 
   /** Generic method for making API requests and catching/throwing errors */
   // static async request(endpoint: string, data = {}, method = "GET") {
@@ -32,28 +32,54 @@ class AdopterAPI {
   //   return await resp.json();
   // }
 
+  /** Generic method for making API requests and catching/throwing errors */
+  static async request(endpoint: string, data = {}, method= "GET") {
+    const url = new URL(`${BASE_URL}/${endpoint}`);
+    const headers = {
+      "content-type": "application/json",
+    }
 
-  static async login(body): Promise<number>{
-    const response = await fetch(`${BASE_URL}/auth/login`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      credentials: "include",
-      headers: {
-        "content-type": "application/json"
-      }
-    })
+    url.search = method === "GET" ? new URLSearchParams(data).toString() : "";
 
-    return response.status;
+    const body = method !== "GET" ? JSON.stringify(data) : undefined;
+
+    const resp = await fetch(url, { method, body, headers, credentials: "include" });
+
+    if (!resp.ok) {
+      console.error("API Error:", resp.statusText, resp.status);
+      const error = await resp.text();
+      console.log(error)
+      throw new Error(error);
+    }
+
+    return await resp;
+
   }
 
+  /** Login to Adopter */
+  static async login(body: Login) {
+    // const response = await fetch(`${BASE_URL}/auth/login`, {
+    //   method: "POST",
+    //   body: JSON.stringify(body),
+    //   credentials: "include",
+    //   headers: {
+    //     "content-type": "application/json"
+    //   }
+    // })
+    await this.request('auth/login', body, "POST");
+  }
+
+  /** Logout of Adopter */
   static async logout() {
-    const response = await fetch(`${BASE_URL}/auth/logout`, {
+    await fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
-    return response;
+
+    await this.request("auth/logout", {}, "POST");
   }
 
+  /** Get all possible breed */
   static async getBreeds() {
     const response = await fetch(`${BASE_URL}/dogs/breeds`, {
       method: "GET",
@@ -61,6 +87,36 @@ class AdopterAPI {
     })
 
     return response.json();
+  }
+
+  /** Get all dogs that meet search params */
+  static async searchDogs() {
+    const response = await fetch(`BASE_URL/dogs/search`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    return response;
+  }
+
+  /** Get dogs from Adopter, based on dog IDs */
+  static async getDogs() {
+
+  }
+
+  /** Get matched dog for adoption */
+  static async getMatch() {
+
+  }
+
+  /** Get location objects for zip codes */
+  static async getLocations() {
+
+  }
+
+  /**  */
+  static async searchLocations() {
+
   }
 }
 

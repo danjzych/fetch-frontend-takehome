@@ -26,3 +26,15 @@ interface Coordinates {
 }
 
 // Interfaces for response bodies in Adopter API //
+
+interface Login {
+  name: string;
+  email: string;
+}
+
+export type {
+  Dog,
+  Location,
+  Coordinates,
+  Login
+}
