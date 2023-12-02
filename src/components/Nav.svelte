@@ -29,13 +29,7 @@
 						class="h-5 w-5"
 						fill="none"
 						viewBox="0 0 24 24"
-						stroke="currentColor"
-						><path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth="2"
-							d="M4 6h16M4 12h16M4 18h7"
-						/></svg
+						stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h7" /></svg
 					>
 				</div>
 				<ul
@@ -45,7 +39,7 @@
 					<li><a href="/">Home</a></li>
 					<li><a href="/search">Search Dogs</a></li>
 					<li><a href="/favorites">Favorite Dogs</a></li>
-					<li><a href="/">Match</a></li>
+					<li><a href="/match">Match</a></li>
 					<li>
 						<button class="btn btn-secondary btn-xs" on:click={logout}
 							>Logout</button

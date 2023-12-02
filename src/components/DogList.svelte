@@ -5,11 +5,12 @@
 
 	export let dogs: Dog[];
 
-	function favoriteDog(dog: Dog) {
-		//to allow access to array methods on writeable store
-		const favoritedDogsArray = [...$favoritedDogs];
-		if (!favoritedDogsArray.includes(dog)) {
+	/** Adds or removes selected dog from favoritedDogs store */
+	function favorite(dog: Dog) {
+		if (!$favoritedDogs.includes(dog)) {
 			$favoritedDogs = [...$favoritedDogs, dog];
+		} else {
+			$favoritedDogs = $favoritedDogs.filter((d) => d !== dog);
 		}
 	}
 </script>
@@ -18,6 +19,6 @@
 	class="m-4 flex h-96 flex-wrap justify-center overflow-y-scroll rounded-xl border-2 p-4"
 >
 	{#each dogs as dog, i}
-		<DogCard {dog} on:click={() => favoriteDog(dog)} />
+		<DogCard {dog} on:click={() => favorite(dog)} />
 	{/each}
 </div>

@@ -1,6 +1,12 @@
 'use strict';
 
-import type { Login, SearchBody, SearchResp, Dog } from './interfaces';
+import type {
+	Login,
+	SearchBody,
+	SearchResp,
+	Dog,
+	Match,
+} from './interfaces';
 
 const BASE_URL = 'https://frontend-take-home-service.fetch.com';
 
@@ -57,20 +63,14 @@ class AdopterAPI {
 			credentials: 'include',
 		});
 
-		return response.json();
+		return await response.json();
 	}
 
 	/** Get all dogs that meet search params */
-	static async searchDogs(
-		body: SearchBody,
-		next: string | null = null,
-	): Promise<SearchResp> {
-		const response =
-			next !== null
-				? await this.request(next)
-				: await this.request('/dogs/search', body);
+	static async searchDogs(body: SearchBody): Promise<SearchResp> {
+		const response = await this.request('/dogs/search', body);
 
-		return response.json();
+		return await response.json();
 	}
 
 	/** Get dogs from Adopter, based on dog IDs */
@@ -81,7 +81,11 @@ class AdopterAPI {
 	}
 
 	/** Get matched dog for adoption */
-	static async getMatch() {}
+	static async getMatch(body: string[]): Promise<Match> {
+		const response = this.request('/dogs/match', body, 'POST');
+
+		return (await response).json();
+	}
 
 	/** Get location objects for zip codes */
 	static async getLocations() {}

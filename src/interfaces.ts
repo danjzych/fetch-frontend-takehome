@@ -11,6 +11,10 @@ interface Dog {
 	breed: string;
 }
 
+interface Match {
+	match: string;
+}
+
 interface Location {
 	zip_code: string;
 	latitude: number;
@@ -32,11 +36,21 @@ interface Login {
 	email: string;
 }
 
-interface SearchBody {
-	sort: string;
-	selectedBreeds: string[];
+interface SearchPreferences {
+	ascending: boolean;
+	selectedBreeds: Set<string>;
 	ageMin: number;
 	ageMax: number;
+}
+
+interface SearchBody {
+	breeds?: string[];
+	zipcode?: number[];
+	ageMin?: number;
+	ageMax?: number;
+	size?: number;
+	from?: number;
+	sort?: string;
 }
 
 interface SearchResp {
@@ -46,4 +60,13 @@ interface SearchResp {
 	total: number;
 }
 
-export type { Dog, Location, Coordinates, Login, SearchBody, SearchResp };
+export type {
+	Dog,
+	Match,
+	Location,
+	Coordinates,
+	Login,
+	SearchPreferences,
+	SearchBody,
+	SearchResp,
+};

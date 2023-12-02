@@ -1,8 +1,22 @@
 <script lang="ts">
-	import type { Search } from '../interfaces';
-	export let allBreeds;
-	export let ascending: boolean;
-	export let searchPreferences: Search;
+	import type { ChangeEventHandler } from 'svelte/elements';
+	import type { SearchPreferences } from '../interfaces';
+	export let allBreeds: string[];
+	export let searchPreferences: SearchPreferences;
+
+	function addBreedFilter(evt: FormDataEvent) {
+		const breed = evt.target.value as string;
+
+		// console.log(searchPreferences.selectedBreeds);
+		// searchPreferences.selectedBreeds.add(breed);
+		// console.log(searchPreferences.selectedBreeds);
+
+		console.log(searchPreferences.selectedBreeds);
+		searchPreferences.selectedBreeds.has(breed)
+			? searchPreferences.selectedBreeds.delete(breed)
+			: searchPreferences.selectedBreeds.add(breed);
+		console.log(searchPreferences.selectedBreeds);
+	}
 </script>
 
 <!-- flex w-11/12 items-center justify-evenly border-2 -->
@@ -14,14 +28,31 @@
 			Search Dogs
 		</h2>
 		<div class="join-item border-2 border-base-200 p-2">
-			<label for="breeds" class="font-semilight mb-0.5 block px-4"
+			<!-- <label for="breeds" class="font-semilight mb-0.5 block px-4"
 				>Breeds:</label
+			> -->
+			<select
+				id="breeds"
+				class="select select-ghost w-full max-w-xs"
+				aria-label="Filter Breeds"
+				multiple
+				on:change={addBreedFilter}
 			>
-			<input type="text" id="breeds" class="border-2" />
+				<option disabled selected>Filter by breeds:</option>
+				{#if allBreeds}
+					{#each allBreeds as breed}
+						<option value={breed}>{breed}</option>
+					{/each}
+				{/if}
+			</select>
 		</div>
 		<div class="join-item border-2 border-base-200 p-2">
 			<label for="ascending" class="">Sort Ascending:</label>
-			<input type="checkbox" id="ascending" bind:checked={ascending} />
+			<input
+				type="checkbox"
+				id="ascending"
+				bind:checked={searchPreferences.ascending}
+			/>
 		</div>
 		<div class="join-item border-2 border-base-200 p-2">
 			<label for="ageMin" class="">Minimum Age:</label>
