@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { Dog } from '../interfaces';
+
 	export let dog: Dog;
 </script>
 
 <div
-	class="card card-bordered card-side mx-2 my-3 w-fit bg-base-100 shadow-xl"
+	class="card card-bordered card-side mx-2 my-3 w-96 justify-center bg-base-100 shadow-xl"
 >
 	<figure>
 		<img src={dog.img} alt="Adoptable Dog {dog.name}" class="max-h-60" />
@@ -23,7 +24,7 @@
 			<p>{dog.zip_code}</p>
 		</div>
 		<div class="card-actions justify-end">
-			<button class="btn btn-primary">
+			<button class="btn btn-primary" on:click>
 				Favorite {dog.name}
 			</button>
 		</div>

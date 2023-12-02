@@ -1,31 +1,48 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { isLoggedIn } from '../../stores';
+	import { isLoggedIn, availableDogs, pagination } from '../../stores';
 	import Searchbar from '../../components/Searchbar.svelte';
 	import DogList from '../../components/DogList.svelte';
 	import AdopterAPI from '../../api';
-	import type { Search, Dog } from '../../interfaces';
+	import type { SearchBody, Dog } from '../../interfaces';
 
-	if (!$isLoggedIn) goto('/');
+	// if ($isLoggedIn === false) {
+	// 	console.log('tests');
+	// 	goto('/', { replaceState: true });
+	// }
 
 	let allBreeds: string[];
-	let searchPreferences: Search = {
-		sort: 'breed:asc',
+	let ascending: boolean = true;
+	let searchPreferences: SearchBody = {
+		sort: ascending ? 'breed:asc' : 'breed:desc',
 		selectedBreeds: [],
 		ageMin: 0,
-		ageMax: 100,
+		ageMax: 20,
 	};
-	let availableDogs: Dog[];
-	let nextPage: string;
 
 	/** Searches for dogs based on search preferences (if any), set those dogs as well as next page in state */
-	async function getDogs(): Promise<void> {
-        console.debug("getDogs");
-		const availableDogIDs = await AdopterAPI.searchDogs(searchPreferences);
-		availableDogs = await AdopterAPI.getDogs(availableDogIDs.resultIds);
+	async function getDogs(page: string = ''): Promise<void> {
+		const availableDogIDs =
+			page === ''
+				? await AdopterAPI.searchDogs(searchPreferences)
+				: await AdopterAPI.searchDogs(searchPreferences, page);
+		$availableDogs = await AdopterAPI.getDogs(availableDogIDs.resultIds);
 
-		nextPage = availableDogIDs.nextPage;
+		console.log(availableDogIDs);
+
+		$pagination = { ...$pagination, nextPage: availableDogIDs.next };
+		if (availableDogIDs.prev !== undefined) {
+			$pagination = { ...$pagination, lastPage: availableDogIDs.prev };
+		}
+
+		console.log($pagination);
+	}
+
+	async function changePage(direction: string) {
+		if (direction === 'forward') {
+			getDogs($pagination.nextPage);
+		}
 	}
 
 	/** Get all currently available breeds and set state */
@@ -40,16 +57,26 @@
 </script>
 
 <div class="position absolute top-16 h-[calc(100vh_-_4rem)] w-screen">
-	<Searchbar bind:searchPreferences {allBreeds} on:submit={getDogs}/>
+	<Searchbar
+		bind:searchPreferences
+		{allBreeds}
+		{ascending}
+		on:submit={() => getDogs()}
+	/>
 
 	{#if !availableDogs}
 		<p>loading...</p>
 	{:else}
-		<DogList {availableDogs} />
+		<DogList dogs={$availableDogs} />
 	{/if}
 
 	<div class="join grid grid-cols-2">
-		<button class="btn btn-outline join-item">Previous page</button>
-		<button class="btn btn-outline join-item">Next</button>
+		<button class="btn btn-outline join-item" on:click={changePage}
+			>Previous page</button
+		>
+		<button
+			class="btn btn-outline join-item"
+			on:click={() => changePage('forward')}>Next</button
+		>
 	</div>
 </div>

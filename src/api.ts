@@ -1,6 +1,6 @@
 'use strict';
 
-import type { Login, Search, Dog } from './interfaces';
+import type { Login, SearchBody, SearchResp, Dog } from './interfaces';
 
 const BASE_URL = 'https://frontend-take-home-service.fetch.com';
 
@@ -11,7 +11,7 @@ const BASE_URL = 'https://frontend-take-home-service.fetch.com';
 class AdopterAPI {
 	/** Generic method for making API requests and catching/throwing errors */
 	static async request(endpoint: string, data = {}, method = 'GET') {
-		const url = new URL(`${BASE_URL}/${endpoint}`);
+		const url = new URL(`${BASE_URL}${endpoint}`);
 		const headers = {
 			'content-type': 'application/json',
 		};
@@ -40,17 +40,14 @@ class AdopterAPI {
 
 	/** Login to Adopter */
 	static async login(body: Login) {
-		await this.request('auth/login', body, 'POST');
+		await this.request('/auth/login', body, 'POST');
 	}
 
 	/** Logout of Adopter */
 	static async logout() {
-		await fetch(`${BASE_URL}/auth/logout`, {
-			method: 'POST',
-			credentials: 'include',
-		});
+		const response = await this.request('/auth/logout', {}, 'POST');
 
-		await this.request('auth/logout', {}, 'POST');
+		return response;
 	}
 
 	/** Get all possible breed */
@@ -64,18 +61,21 @@ class AdopterAPI {
 	}
 
 	/** Get all dogs that meet search params */
-	static async searchDogs(body: Search, next: string | null = null) {
+	static async searchDogs(
+		body: SearchBody,
+		next: string | null = null,
+	): Promise<SearchResp> {
 		const response =
 			next !== null
 				? await this.request(next)
-				: await this.request('dogs/search', body);
+				: await this.request('/dogs/search', body);
 
 		return response.json();
 	}
 
 	/** Get dogs from Adopter, based on dog IDs */
 	static async getDogs(body: string[]): Promise<Dog[]> {
-		const response = this.request('dogs', body, 'POST');
+		const response = this.request('/dogs', body, 'POST');
 
 		return (await response).json();
 	}

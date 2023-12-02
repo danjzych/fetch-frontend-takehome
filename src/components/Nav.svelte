@@ -1,5 +1,17 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { isLoggedIn } from '../stores';
+	import AdopterAPI from '../api';
+
+	async function logout() {
+		try {
+			await AdopterAPI.logout();
+			isLoggedIn.set(false);
+			goto('/', { replaceState: true });
+		} catch (err) {
+			window.alert(err);
+		}
+	}
 </script>
 
 <nav class="position navbar fixed z-50 bg-base-100 shadow-2xl">
@@ -32,9 +44,13 @@
 				>
 					<li><a href="/">Home</a></li>
 					<li><a href="/search">Search Dogs</a></li>
-					<li><a href="/">Favorite Dogs</a></li>
+					<li><a href="/favorites">Favorite Dogs</a></li>
 					<li><a href="/">Match</a></li>
-					<li><a href="/">Logout</a></li>
+					<li>
+						<button class="btn btn-secondary btn-xs" on:click={logout}
+							>Logout</button
+						>
+					</li>
 				</ul>
 			</div>
 		</div>

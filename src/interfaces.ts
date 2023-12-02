@@ -25,18 +25,25 @@ interface Coordinates {
 	lon: number;
 }
 
-// Interfaces for response bodies in Adopter API //
+// Interfaces for interacting with Adopter API //
 
 interface Login {
 	name: string;
 	email: string;
 }
 
-interface Search {
+interface SearchBody {
 	sort: string;
 	selectedBreeds: string[];
 	ageMin: number;
 	ageMax: number;
 }
 
-export type { Dog, Location, Coordinates, Login, Search };
+interface SearchResp {
+	next: string;
+	prev?: string;
+	resultIds: string[];
+	total: number;
+}
+
+export type { Dog, Location, Coordinates, Login, SearchBody, SearchResp };

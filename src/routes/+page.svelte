@@ -23,11 +23,15 @@
 </script>
 
 <form on:submit|preventDefault={login} class="position absolute top-16">
-	<h2>Login to Adopter</h2>
-	<input placeholder="name" bind:value={formData.name} />
-	<input placeholder="email" bind:value={formData.email} />
-	{#if error}
-		<p>Invalid Credentials, try again.</p>
+	{#if $isLoggedIn === false}
+		<h2>Login to Adopter</h2>
+		<input placeholder="name" bind:value={formData.name} />
+		<input placeholder="email" bind:value={formData.email} />
+		{#if error}
+			<p>Invalid Credentials, try again.</p>
+		{/if}
+		<button class="btn btn-primary">Login</button>
+	{:else}
+		<p>hello adopter!</p>
 	{/if}
-	<button class="btn btn-primary">Login</button>
 </form>
