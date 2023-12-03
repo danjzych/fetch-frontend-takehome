@@ -3,13 +3,14 @@
 	import { isLoggedIn } from '../stores';
 	import AdopterAPI from '../api';
 
+	/** Logout from Adopter */
 	async function logout() {
 		try {
 			await AdopterAPI.logout();
 			isLoggedIn.set(false);
 			goto('/', { replaceState: true });
 		} catch (err) {
-			window.alert(err);
+			window.alert(`Error: ${err}, please try again.`);
 		}
 	}
 </script>

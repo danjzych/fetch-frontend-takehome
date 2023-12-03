@@ -22,16 +22,20 @@
 	}
 </script>
 
-<form on:submit|preventDefault={login} class="position absolute top-16">
+<div
+	class="position absolute top-16 flex w-screen flex-col items-center justify-center"
+>
 	{#if $isLoggedIn === false}
-		<h2>Login to Adopter</h2>
-		<input placeholder="name" bind:value={formData.name} />
-		<input placeholder="email" bind:value={formData.email} />
-		{#if error}
-			<p>Invalid Credentials, try again.</p>
-		{/if}
-		<button class="btn btn-primary">Login</button>
+		<form on:submit|preventDefault={login}>
+			<h2>Login to Adopter</h2>
+			<input placeholder="name" bind:value={formData.name} />
+			<input placeholder="email" bind:value={formData.email} />
+			{#if error}
+				<p>Invalid Credentials, try again.</p>
+			{/if}
+			<button class="btn btn-primary">Login</button>
+		</form>
 	{:else}
-		<p>hello adopter!</p>
+		<h2 class="my-5 text-3xl font-bold">Hello Adopter!</h2>
 	{/if}
-</form>
+</div>

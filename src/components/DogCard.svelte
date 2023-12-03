@@ -23,8 +23,8 @@
 			</div>
 		</div>
 		<div>
-			<p>{dog.age}</p>
-			<p>{dog.zip_code}</p>
+			<p>Age: <span>{dog.age}</span></p>
+			<p>Zipcode: {dog.zip_code}</p>
 		</div>
 		<div class="card-actions justify-end">
 			{#if !$favoritedDogs.includes(dog)}
