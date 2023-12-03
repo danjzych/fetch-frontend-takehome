@@ -16,7 +16,7 @@ export function checkRedirect(loggedIn: boolean) {
  * @returns urlParams
  */
 export function formatQueryString(
-	query: Record<string, string | number | string[]>,
+	query: Record<string, string | number | string[] | number[]>,
 ): string {
 	const newParams = new URLSearchParams();
 
