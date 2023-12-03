@@ -1,6 +1,12 @@
 <script lang="ts">
-	import { favoritedDogs } from '../../stores';
+	import { onMount } from 'svelte';
+	import { favoritedDogs, isLoggedIn } from '../../stores';
 	import Doglist from '../../components/DogList.svelte';
+	import { checkRedirect } from '$lib/utils';
+
+	onMount(() => {
+		checkRedirect($isLoggedIn);
+	});
 </script>
 
 <div

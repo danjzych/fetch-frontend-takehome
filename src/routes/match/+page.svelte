@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
-	import { matchedDog, favoritedDogs } from '../../stores';
+	import { onMount } from 'svelte';
+	import { matchedDog, favoritedDogs, isLoggedIn } from '../../stores';
 	import DogCard from '../../components/DogCard.svelte';
+	import { checkRedirect } from '$lib/utils';
 	import AdopterAPI from '../../api';
+	import { fade, fly } from 'svelte/transition';
 
 	/** Get match based on favorited dogs in favoritedDogs store*/
 	async function getMatch() {
@@ -11,15 +13,26 @@
 
 		$matchedDog = $favoritedDogs.find((f) => f.id === match.match);
 	}
+
+	onMount(() => {
+		checkRedirect($isLoggedIn);
+	});
 </script>
 
 <div
 	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen items-center justify-center"
 >
-	{#if !$matchedDog}
+	{#if !$matchedDog && $favoritedDogs.length > 0}
 		<button class="btn btn-primary" on:click={getMatch}>
 			Find your match!
 		</button>
+	{:else if !$matchedDog}
+		<div class="flex flex-col items-center gap-10">
+			<p class="text-xl font-semibold">
+				You need to favorite some dogs before finding your match!
+			</p>
+			<a class="btn-lnk btn w-32" href="/search">Find Dogs</a>
+		</div>
 	{:else}
 		<div class="flex min-w-full items-center justify-evenly" in:fly>
 			<div
