@@ -1,14 +1,8 @@
 <script lang="ts">
-	import { allBreeds, searchPreferences } from '../stores';
-
-	function addBreedFilter(breed: string) {
-		$searchPreferences.selectedBreeds.has(breed)
-			? $searchPreferences.selectedBreeds.delete(breed)
-			: $searchPreferences.selectedBreeds.add(breed);
-	}
+	import { searchPreferences } from '../stores';
+	import Dropdown from './Dropdown.svelte';
 </script>
 
-<!-- flex w-11/12 items-center justify-evenly border-2 -->
 <div class="mx-auto my-8 flex h-14 justify-center">
 	<form class="join" on:submit|preventDefault>
 		<h2
@@ -16,36 +10,9 @@
 		>
 			Search Dogs
 		</h2>
-		<div class="join-item flex items-center border-2 border-base-200 p-2">
-			<div
-				id="breeds"
-				class="dropdown dropdown-bottom"
-				aria-label="Filter Breeds"
-			>
-				<div tabindex="0" class="h-full" role="button">
-					Filter by breeds:
-					<div />
-					{#if $allBreeds}
-						<ul
-							tabindex="0"
-							class="menu dropdown-content z-[1] block h-72 w-52 overflow-y-scroll rounded-box bg-base-100 p-2 shadow-inner"
-							role="menu"
-						>
-							{#each $allBreeds as breed}
-								<li>
-									<button
-										type="button"
-										on:click={() => addBreedFilter(breed)}>{breed}</button
-									>
-								</li>
-							{/each}
-						</ul>
-					{/if}
-				</div>
-			</div>
-		</div>
+		<Dropdown />
 		<div
-			class="justify-normal-between join-item flex items-center gap-2 border-2 border-base-200 p-2"
+			class="join-item flex items-center justify-between gap-2 border-2 border-base-200 p-2"
 		>
 			<label for="ascending" class="">Sort Ascending:</label>
 			<input
@@ -56,7 +23,7 @@
 			/>
 		</div>
 		<div
-			class="justify-normal-between join-item flex items-center gap-2 border-2 border-base-200 p-2"
+			class="join-item flex items-center justify-between gap-2 border-2 border-base-200 p-2"
 		>
 			<label for="ageMin" class="">Minimum Age:</label>
 			<input
@@ -69,7 +36,7 @@
 			/>
 		</div>
 		<div
-			class="justify-normal-between join-item flex items-center gap-2 border-2 border-base-200 p-2"
+			class="join-item flex items-center justify-between gap-2 border-2 border-base-200 p-2"
 		>
 			<label for="ageMax" class="">Max Age:</label>
 			<input

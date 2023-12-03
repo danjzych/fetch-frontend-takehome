@@ -7,6 +7,7 @@
 		searchPreferences,
 		availableDogs,
 	} from '../../stores';
+	import Loader from '../../components/Loader.svelte';
 	import Searchbar from '../../components/Searchbar.svelte';
 	import DogList from '../../components/DogList.svelte';
 	import AdopterAPI from '../../api';
@@ -54,16 +55,18 @@
 	});
 </script>
 
-<div class="position absolute top-16 h-[calc(100vh_-_4rem)] w-screen">
+<div
+	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen flex-col justify-between"
+>
 	<Searchbar on:submit={() => getDogs()} />
 
 	{#if $availableDogs.length === 0}
-		<p>loading...</p>
+		<Loader />
 	{:else}
 		<DogList dogs={$availableDogs} />
 	{/if}
 
-	<div class="join grid grid-cols-2">
+	<div class="join my-4 grid grid-cols-2">
 		<button
 			class="btn btn-outline join-item"
 			on:click={() => changePage('back')}>Previous</button

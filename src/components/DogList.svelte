@@ -17,7 +17,7 @@
 </script>
 
 <div
-	class="m-4 flex h-96 flex-wrap justify-center overflow-y-scroll rounded-xl border-2 p-4 shadow-inner"
+	class="m-4 flex flex-grow flex-wrap justify-center overflow-y-scroll rounded-xl border-2 p-4 shadow-inner"
 	transition:fade
 >
 	{#each dogs as dog (dog.id)}
