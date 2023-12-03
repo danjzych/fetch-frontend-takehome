@@ -35,8 +35,14 @@
 		}
 	}
 
+	/** When user searches dog, get dogs, starting over from first page of results*/
+	function searchDogs() {
+		currentPage.set(0);
+
+		getDogs();
+	}
+
 	async function changePage(direction: string) {
-		console.debug(direction);
 		if (direction === 'back' && $currentPage === 0) {
 			window.alert('cannot go back');
 		} else {
@@ -58,7 +64,7 @@
 <div
 	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen flex-col justify-between"
 >
-	<Searchbar on:submit={() => getDogs()} />
+	<Searchbar on:submit={() => searchDogs()} />
 
 	{#if $availableDogs.length === 0}
 		<Loader />
@@ -66,13 +72,14 @@
 		<DogList dogs={$availableDogs} />
 	{/if}
 
-	<div class="join my-4 grid grid-cols-2">
+	<div class="join mx-auto my-4">
 		<button
-			class="btn btn-outline join-item"
+			class="btn btn-outline join-item w-20"
 			on:click={() => changePage('back')}>Previous</button
 		>
+		<div class="btn btn-outline join-item w-5">{$currentPage}</div>
 		<button
-			class="btn btn-outline join-item"
+			class="btn btn-outline join-item w-20"
 			on:click={() => changePage('forward')}>Next</button
 		>
 	</div>

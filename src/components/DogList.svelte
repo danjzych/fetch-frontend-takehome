@@ -18,7 +18,7 @@
 
 <div
 	class="m-4 flex flex-grow flex-wrap justify-center overflow-y-scroll rounded-xl border-2 p-4 shadow-inner"
-	transition:fade
+	in:fade={{ duration: 500 }}
 >
 	{#each dogs as dog (dog.id)}
 		<DogCard {dog} on:click={() => favorite(dog)} />

@@ -11,7 +11,7 @@
 	<figure class="max-h-inherit border-r-2 border-r-base-300 bg-base-200">
 		<img src={dog.img} alt="Adoptable Dog {dog.name}" loading="lazy" />
 	</figure>
-	<div class="card-body">
+	<div class="card-body justify-between">
 		<div class="space-between flex items-center gap-4">
 			<h2 class="card-title">
 				{dog.name}
@@ -22,17 +22,21 @@
 				{dog.breed}
 			</div>
 		</div>
-		<div>
-			<p>Age: <span>{dog.age}</span></p>
-			<p>Zipcode: {dog.zip_code}</p>
+		<div class="text-center">
+			<p>Age: <span class="font-light text-gray-500">{dog.age}</span></p>
+			<p>
+				Zipcode: <span class="font-light text-gray-500"
+					>{dog.zip_code}</span
+				>
+			</p>
 		</div>
-		<div class="card-actions justify-end">
+		<div class="card-actions">
 			{#if !$favoritedDogs.includes(dog)}
-				<button class="btn btn-primary" on:click>
+				<button class="btn btn-primary btn-block" on:click>
 					Favorite {dog.name}
 				</button>
 			{:else}
-				<button class="btn-base-300 btn" on:click>
+				<button class="btn-base-300 btn btn-block" on:click>
 					Unfavorite {dog.name}
 				</button>
 			{/if}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade, fly } from 'svelte/transition';
 	import { matchedDog, favoritedDogs } from '../../stores';
 	import DogCard from '../../components/DogCard.svelte';
 	import AdopterAPI from '../../api';
@@ -20,8 +21,11 @@
 			Find your match!
 		</button>
 	{:else}
-		<div class="flex min-w-full items-center justify-evenly">
-			<div class="flex flex-col items-center gap-8">
+		<div class="flex min-w-full items-center justify-evenly" in:fly>
+			<div
+				class="flex flex-col items-center gap-8"
+				in:fade={{ duration: 1000, delay: 1500 }}
+			>
 				<p class="text-lg font-semibold">
 					Not sure this is the dog for you? That's okay, try another match:
 				</p>
