@@ -1,5 +1,6 @@
 'use strict';
 
+import { formatQueryString } from '$lib/utils';
 import type {
 	Login,
 	SearchBody,
@@ -22,8 +23,7 @@ class AdopterAPI {
 			'content-type': 'application/json',
 		};
 
-		url.search =
-			method === 'GET' ? new URLSearchParams(data).toString() : '';
+		url.search = method === 'GET' ? formatQueryString(data) : '';
 
 		const body = method !== 'GET' ? JSON.stringify(data) : undefined;
 
