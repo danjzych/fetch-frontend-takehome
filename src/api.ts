@@ -86,12 +86,6 @@ class AdopterAPI {
 
 		return (await response).json();
 	}
-
-	/** Get location objects for zip codes */
-	static async getLocations() {}
-
-	/**  */
-	static async searchLocations() {}
 }
 
 export default AdopterAPI;
