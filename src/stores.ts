@@ -5,6 +5,8 @@ import type { Dog, SearchPreferences } from './interfaces';
 
 export const isLoggedIn = writable<boolean>(false);
 
+export const isLoading = writable<boolean>(true);
+
 export const allBreeds = writable<string[]>([]);
 
 /** Pointer for current page in search results, to maintain search position

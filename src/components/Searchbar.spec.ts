@@ -50,7 +50,7 @@ describe('Searchbar', () => {
 		expect(currentPreferences.ageMin).toBe(0);
 
 		const ageMinInput = screen.getByLabelText(/Minimum Age/i);
-		console.log(ageMinInput);
+
 		await fireEvent.change(ageMinInput, { target: { value: 5 } });
 
 		// Was unable to configure testing change events in this testing environment

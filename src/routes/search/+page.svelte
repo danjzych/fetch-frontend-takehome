@@ -6,34 +6,14 @@
 		currentPage,
 		searchPreferences,
 		availableDogs,
+		isLoading,
 	} from '../../stores';
 	import Loader from '../../components/Loader.svelte';
 	import Searchbar from '../../components/Searchbar.svelte';
 	import DogList from '../../components/DogList.svelte';
 	import AdopterAPI from '../../api';
 	import { checkRedirect } from '$lib/utils';
-	import type { SearchBody } from '../../interfaces';
-
-	/** Searches for dogs based on search preferences (if any), set those dogs as well as next page in state */
-	async function getDogs(): Promise<void> {
-		const body: SearchBody = {
-			ageMin: $searchPreferences.ageMin,
-			ageMax: $searchPreferences.ageMax,
-			from: $currentPage * 25,
-			sort: $searchPreferences.ascending ? 'breed:asc' : 'breed:desc',
-		};
-
-		if ($searchPreferences.selectedBreeds.size > 0) {
-			body.breeds = [...$searchPreferences.selectedBreeds];
-		}
-
-		try {
-			const availableDogIDs = await AdopterAPI.searchDogs(body);
-			$availableDogs = await AdopterAPI.getDogs(availableDogIDs.resultIds);
-		} catch (err) {
-			window.alert(err);
-		}
-	}
+	import getDogs from './getDogs';
 
 	/** When user searches dog, get dogs, starting over from first page of results*/
 	function searchDogs() {
@@ -66,9 +46,14 @@
 >
 	<Searchbar on:submit={() => searchDogs()} />
 
-	{#if $availableDogs.length === 0}
+	{#if $isLoading}
 		<Loader />
 	{:else}
+		<a
+			href="/match"
+			class="text-semilight link link-accent m-0 p-0 text-center text-sm"
+			>Find your Match</a
+		>
 		<DogList dogs={$availableDogs} />
 	{/if}
 
