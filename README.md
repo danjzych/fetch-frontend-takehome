@@ -9,7 +9,7 @@
   <h3 align="center">An application to explore adoptable dogs and find your perfect match.</h3>
 
   <p align="center">
-    <a href="http://friender.danielzych.com/">View Demo</a>
+    <a href="https://adopter-agrv.onrender.com/">View Demo</a>
   </p>
 </div>
 
