@@ -23,11 +23,11 @@
 </script>
 
 <div
-	class="position absolute top-16 flex w-screen flex-col items-center justify-center"
+	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen flex-col items-center justify-center"
 >
 	{#if $isLoggedIn === false}
 		<form
-			class="mx-auto mt-20 flex h-fit w-96 flex-col items-center justify-between rounded-xl border-0 border-base-200 py-4 shadow-2xl"
+			class="mx-auto flex h-fit w-96 flex-col items-center justify-between rounded-xl border-0 border-base-200 py-4 shadow-2xl"
 			on:submit|preventDefault={login}
 		>
 			<div class="w-full text-center">
@@ -64,13 +64,18 @@
 			</p>
 		{/if}
 	{:else}
-		<div class="flex min-h-full flex-col items-center justify-center">
-			<h2 class="my-8 text-2xl font-bold text-secondary">
+		<div class="flex flex-col items-center justify-center">
+			<h2 class="mb-8 text-3xl font-extrabold text-secondary">
 				Hello Adopter!
 			</h2>
 			<p>
-				Explore what furry friends are available for adoption, and find
-				your perfect match.
+				<a href="/search" class="link-hover link-secondary font-semibold"
+					>Explore</a
+				>
+				what furry friends are available for adoption, and find your perfect
+				<a href="/match" class="link-hover link-secondary font-semibold"
+					>match.</a
+				>
 			</p>
 		</div>
 	{/if}
