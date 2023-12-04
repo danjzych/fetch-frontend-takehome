@@ -29,6 +29,7 @@
 			<input
 				type="number"
 				id="ageMin"
+				data-testid="ageMin"
 				min="0"
 				max="20"
 				class="rounded-md border-2 border-gray-100 shadow-inner"

@@ -1,3 +1,5 @@
+'use strict';
+
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/svelte';
 import Nav from './Nav.svelte';
@@ -8,9 +10,7 @@ describe('Nav', () => {
 		isLoggedIn.set(false);
 	});
 
-	afterEach(() => {
-		cleanup();
-	});
+	afterEach(() => cleanup());
 
 	it('should render the component', () => {
 		const { debug } = render(Nav);

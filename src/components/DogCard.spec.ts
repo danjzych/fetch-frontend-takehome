@@ -1,4 +1,6 @@
-import { describe, it, expect, afterEach, beforeEach, test } from 'vitest';
+'use strict';
+
+import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import {
 	render,
 	screen,
@@ -23,9 +25,7 @@ describe('DogCard', () => {
 		favoritedDogs.set([]);
 	});
 
-	afterEach(() => {
-		cleanup();
-	});
+	afterEach(() => cleanup());
 
 	it('should render the component', () => {
 		render(DogCard, { dog: testDog });
@@ -59,7 +59,5 @@ describe('DogCard', () => {
 		expect(favoriteButton).toBeTruthy();
 
 		await fireEvent.click(favoriteButton);
-
-		console.log(favoriteButton.textContent);
 	});
 });

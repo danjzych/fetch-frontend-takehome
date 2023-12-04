@@ -1,4 +1,6 @@
-import { describe, it, expect, afterEach, beforeEach, test } from 'vitest';
+'use strict';
+
+import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/svelte';
 import type { Dog } from '../interfaces';
 import DogList from './DogList.svelte';
@@ -23,9 +25,7 @@ const testDogs: Dog[] = [
 ];
 
 describe('DogCard', () => {
-	afterEach(() => {
-		cleanup();
-	});
+	afterEach(() => cleanup());
 
 	it('renders', () => {
 		render(DogList, { dogs: testDogs });
