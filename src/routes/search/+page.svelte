@@ -42,7 +42,7 @@
 </script>
 
 <div
-	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen flex-col justify-between"
+	class="position absolute top-16 flex h-[calc(100vh_-_4rem)] w-screen flex-col items-center justify-between"
 >
 	<Searchbar on:submit={() => searchDogs()} />
 
@@ -51,7 +51,7 @@
 	{:else}
 		<a
 			href="/match"
-			class="text-semilight link link-accent m-0 p-0 text-center text-sm"
+			class="text-semilight link link-accent m-0 w-fit p-0 text-center text-sm"
 			>Find your Match</a
 		>
 		<DogList dogs={$availableDogs} />

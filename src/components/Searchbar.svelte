@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { searchPreferences } from '../stores';
+	import { allBreeds, searchPreferences } from '../stores';
 	import Dropdown from './Dropdown.svelte';
 </script>
 
@@ -10,7 +10,7 @@
 		>
 			Search Dogs
 		</h2>
-		<Dropdown />
+		<Dropdown options={$allBreeds} />
 		<div
 			class="join-item flex items-center justify-between gap-2 border-2 border-base-200 p-2"
 		>

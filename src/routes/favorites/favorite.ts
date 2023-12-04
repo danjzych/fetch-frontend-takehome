@@ -7,6 +7,12 @@ import AdopterAPI from '../../api';
 
 export default async function favorite(dog: Dog) {
 	const favorites = get(favoritedDogs);
+
+	if (favorites.length >= 100) {
+		window.alert('Cannot favorite more than 100 dogs');
+		return;
+	}
+
 	if (!favorites.includes(dog)) {
 		favoritedDogs.update((f) => [...f, dog]);
 	} else {

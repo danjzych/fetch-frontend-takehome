@@ -2,6 +2,8 @@
 	import { allBreeds } from '../stores';
 	import ToggleableItem from './ToggleableItem.svelte';
 
+	export let options: string[];
+
 	let showFilter: boolean = false;
 </script>
 
@@ -19,13 +21,13 @@
 		>
 			Filter by breeds:
 			<div />
-			{#if $allBreeds && showFilter}
+			{#if options && showFilter}
 				<ul
 					tabindex="0"
 					class="position absolute z-[1] block h-72 w-52 overflow-y-scroll rounded-box bg-base-100 p-2 shadow-inner"
 					role="menu"
 				>
-					{#each $allBreeds as breed}<ToggleableItem {breed} />{/each}
+					{#each options as option}<ToggleableItem breed={option} />{/each}
 				</ul>
 			{/if}
 		</button>
